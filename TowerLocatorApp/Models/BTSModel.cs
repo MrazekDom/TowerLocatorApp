@@ -3,6 +3,7 @@
 namespace TowerLocatorApp.Models {
     /*Model na zaklade Headeru CSV souboru z "Tower Collector" appky*/
     public class BTSModel {
+        public int Id { get; set; }
         public double mcc { get; set; }
         public double mnc { get; set; }
         public double lac { get; set; }

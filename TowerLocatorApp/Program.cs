@@ -1,8 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using TowerLocatorApp.DataAccess;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSwaggerGen(); /*pro zaregistrovani API serveru*/
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("MapDB"), options => options.UseNetTopologySuite()));   /*stejne jako v AppDbContextu, musi byt i zde*/
 
 var app = builder.Build();
 
@@ -12,6 +18,7 @@ if (!app.Environment.IsDevelopment()) {
     app.UseHsts();
 }
 
+app.UseSwagger().UseSwaggerUI(); /*na testovani API*/
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
