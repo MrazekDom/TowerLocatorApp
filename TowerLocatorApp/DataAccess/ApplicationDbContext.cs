@@ -21,11 +21,11 @@ namespace TowerLocatorApp.DataAccess {
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.HasPostgresExtension("postgis");   /* pro postgis */
             modelBuilder.Entity<DetailedMapPointModel>()    /*one-to-many relationship*/
-                .HasOne(point => point.Route)   /* kazdy bod ma prirazenou jednu cestu/Route */
-                .WithMany(route => route.RoutePoints)   /*kazda cesta/Route ma mnoho bodu*/
+                .HasOne(point => point.Route)               /* kazdy bod ma prirazenou jednu cestu/Route */
+                .WithMany(route => route.RoutePoints)       /*kazda cesta/Route ma mnoho bodu*/
                 .HasForeignKey(point => point.RouteId);
 
-            modelBuilder.Entity<BTSModel>()     /*stejny princip jako vyse*/
+            modelBuilder.Entity<BTSModel>()                 /*stejny princip jako vyse*/
                 .HasOne(tower =>tower.Route)
                 .WithMany(route =>route.AssociatedTowers)
                 .HasForeignKey(tower => tower.RouteId);
