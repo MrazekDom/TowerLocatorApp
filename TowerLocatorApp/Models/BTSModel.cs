@@ -1,8 +1,11 @@
 ﻿using CsvHelper.Configuration.Attributes;
+using NetTopologySuite.Geometries;
+
 
 namespace TowerLocatorApp.Models {
     /*Model na zaklade Headeru CSV souboru z "Tower Collector" appky*/
     public class BTSModel {
+        [Ignore]  /*anotace pro CSV Helper, aby nehledal tuhle datovou slozku jako header v souboru, ze ktereho beru data */
         public int Id { get; set; }
         public double mcc { get; set; }
         public double mnc { get; set; }
@@ -14,7 +17,7 @@ namespace TowerLocatorApp.Models {
         public double asu { get; set; }
         public double dbm { get; set; }
         public double ta { get; set; }
-        public double lat { get; set; }
+        public double lat { get; set; }     /*CSV Helper cte datove slozky jako header, musi byt identicke*/
         public double lon { get; set; }
         public double accuracy { get; set; }
         public double speed { get; set; }
@@ -45,8 +48,16 @@ namespace TowerLocatorApp.Models {
         public string? ec_no { get; set; }
         public string? arfcn { get; set; }
 
-        public int? RouteId { get; set; } 
+        [Ignore]
+        public Point MyLocationAtMeasurement { get; set; }
+        [Ignore]
+        public Point ActualTowerLocation { get; set; }
+        [Ignore]
+        public int? RouteId { get; set; }
+        [Ignore]
         public RouteModel? Route { get; set; }
+
+       
     }
 }
 
