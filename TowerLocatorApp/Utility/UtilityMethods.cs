@@ -11,7 +11,7 @@ namespace TowerLocatorApp.Utility {
         /* metoda pro zpracovani vlozeneho CSV souboru,
          vyuzivam CSV Helper */
 
-        public static async Task<List<BTSModel>> ExtractCSV(string CSVFile) {
+        public static async Task<List<BTSModel>> ExtractCSV(string CSVFile) {       /*dostanu z FrontEndu obsah CSV ve stringu */
             List<BTSModel> TowerList = new List<BTSModel>();
             using (var reader = new StringReader(CSVFile)) 
             using (var csv = new CsvReader(reader,CultureInfo.InvariantCulture)) {
@@ -53,7 +53,7 @@ namespace TowerLocatorApp.Utility {
         }
 
         /* metoda pro zpracovani GPX soubory ze Stravy, Garmin atd..., */
-        public static List<DetailedMapPointModel> ParseGPXFile(string GPXFile) {
+        public static List<DetailedMapPointModel> ParseGPXFile(string GPXFile) {   /* z frontendu dostanu GPX file jako string */
             XDocument gpxDocument = XDocument.Parse(GPXFile);
             XNamespace xNamespace = "http://www.topografix.com/GPX/1/1";    /*XML namespace pro GPX*/
             var DetailedPoints = gpxDocument.Root.Elements(xNamespace + "trk")
