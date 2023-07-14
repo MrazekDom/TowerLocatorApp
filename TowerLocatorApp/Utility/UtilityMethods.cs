@@ -1,10 +1,30 @@
-﻿using NetTopologySuite.Geometries;
+﻿using CsvHelper;
+using NetTopologySuite.Geometries;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using TowerLocatorApp.Models;
 
 namespace TowerLocatorApp.Utility {
     public class UtilityMethods {
+
+        /* metoda pro zpracovani vlozeneho CSV souboru,
+         vyuzivam CSV Helper */
+
+        public static async Task<List<BTSModel>> ExtractCSV(string CSVFile) {
+            List<BTSModel> TowerList = new List<BTSModel>();
+            using (var reader = new StringReader(CSVFile)) 
+            using (var csv = new CsvReader(reader,CultureInfo.InvariantCulture)) {
+                var records = csv.GetRecords<BTSModel>();
+                foreach(var record in records) {
+                    record.MyLocationAtMeasurement = new Point(record.lon, record.lat);
+                    string StringTowerCoordinates = await GetCellTowerLocationAsync(record.cell_id, record.mcc, record.mnc, record.lac);
+                    record.ActualTowerLocation = StringCoordinatesToPoint(StringTowerCoordinates);
+                    TowerList.Add(record);
+                }
+                return TowerList;
+            }
+        }
 
 
         /* Metoda pro zjisteni souradnic BTS, 
