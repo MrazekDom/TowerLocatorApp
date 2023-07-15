@@ -1,3 +1,43 @@
+<!-- ve Form tagu musi mit kazdy input unikatni "name" aby fungoval 2 way data
+binding -->
 
-
-
+<form>
+  <div class="form-group mb-3">
+    <label for="gpxFile">Vložte GPX soubor s trasou aktivity"</label>
+    <input
+      type="file"
+      class="form-control"
+      id="gpxFile"
+      accept=".gpx"
+      name="gpxInput"
+    />
+  </div>
+  <div class="form-group mb-3">
+    <label for="csvFile">Vložte CSV soubor z aplikace Tower Locator</label>
+    <input
+      type="file"
+      class="form-control"
+      id="csvFile"
+      accept=".csv"
+      name="csvInput"
+    />
+  </div>
+  <div class="form-group mb-3">
+    <label for="routeName">Zadejte jmeno vaší trasy</label>
+    <input
+      type="text"
+      class="form-control"
+      id="routeName"
+      [(ngModel)]="routeName"
+      name="routeName"
+    />
+  </div>
+  <button
+    [disabled]="routeName === ''"
+    class="btn btn-primary"
+    type="submit"
+    name="buttonSubmit"
+  >
+    Ulozit
+  </button>
+</form>
