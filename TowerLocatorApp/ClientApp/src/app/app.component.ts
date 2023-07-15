@@ -1,9 +1,18 @@
 import { Component } from '@angular/core';
+import { RouteService } from './services/route.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   title = 'app';
+  result: string = '';
+
+  constructor(private routeService: RouteService) {}
+  ngOnInit(): void {
+    this.routeService
+      .getTestValue()
+      .subscribe((response: string) => (this.result = response));
+  }
 }
