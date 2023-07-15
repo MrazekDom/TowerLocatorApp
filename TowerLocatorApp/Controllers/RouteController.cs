@@ -9,7 +9,7 @@ namespace TowerLocatorApp.Controllers {
         // GET: api/<RouteController>
         [HttpGet]
         public async Task<string> Get() {
-            return "Testovaci hodnota";
+            return  "Testovaci hodnota";
         }
 
         // GET api/<RouteController>/5
