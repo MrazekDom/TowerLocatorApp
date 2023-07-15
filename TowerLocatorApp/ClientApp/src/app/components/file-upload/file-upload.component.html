@@ -35,7 +35,7 @@ binding -->
       [(ngModel)]="routeName"
       name="routeName"
     />
-    <!--#csvInput template reference varible -->
+    <!--#csvInput je template reference varible -->
   </div>
   <button
     [disabled]="routeName === '' || isInvalidFileFormat"
@@ -45,4 +45,8 @@ binding -->
   >
     Ulozit
   </button>
+  <p *ngIf="routeName === '' || isInvalidFileFormat" class="text-danger">
+    Soubory musí mít správný formát.<br />
+    Jméno musí být vyplněné
+  </p>
 </form>
