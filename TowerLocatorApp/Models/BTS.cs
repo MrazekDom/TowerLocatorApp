@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 
 namespace TowerLocatorApp.Models {
     /*Model na zaklade Headeru CSV souboru z "Tower Collector" appky*/
-    public class BTSModel {
+    public class BTS {
         [Ignore]  /*anotace pro CSV Helper, aby nehledal tuhle datovou slozku jako header v souboru, ze ktereho beru data */
         public int Id { get; set; }
         public double mcc { get; set; }
@@ -55,7 +55,7 @@ namespace TowerLocatorApp.Models {
         [Ignore]
         public int? RouteId { get; set; }
         [Ignore]
-        public RouteModel? Route { get; set; }
+        public Route? Route { get; set; }
 
        
     }

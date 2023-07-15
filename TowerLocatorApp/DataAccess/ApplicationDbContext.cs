@@ -5,9 +5,9 @@ namespace TowerLocatorApp.DataAccess {
     public class ApplicationDbContext:DbContext {
         private readonly IConfiguration configuration;
 
-        public DbSet<DetailedMapPointModel> MapPoints { get; set; }
-        public DbSet<BTSModel> BTSSet { get; set; }
-        public DbSet<RouteModel> Routes { get; set; }
+        public DbSet<DetailedMapPoint> MapPoints { get; set; }
+        public DbSet<BTS> BTSSet { get; set; }
+        public DbSet<Models.Route> Routes { get; set; }
 
         public ApplicationDbContext(IConfiguration configuration) {
             this.configuration = configuration;
@@ -20,12 +20,12 @@ namespace TowerLocatorApp.DataAccess {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.HasPostgresExtension("postgis");   /* pro postgis */
-            modelBuilder.Entity<DetailedMapPointModel>()    /*one-to-many relationship*/
+            modelBuilder.Entity<DetailedMapPoint>()    /*one-to-many relationship*/
                 .HasOne(point => point.Route)               /* kazdy bod ma prirazenou jednu cestu/Route */
                 .WithMany(route => route.RoutePoints)       /*kazda cesta/Route ma mnoho bodu*/
                 .HasForeignKey(point => point.RouteId);
 
-            modelBuilder.Entity<BTSModel>()                 /*stejny princip jako vyse*/
+            modelBuilder.Entity<BTS>()                 /*stejny princip jako vyse*/
                 .HasOne(tower =>tower.Route)
                 .WithMany(route =>route.AssociatedTowers)
                 .HasForeignKey(tower => tower.RouteId);

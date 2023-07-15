@@ -171,7 +171,7 @@ namespace TowerLocatorApp.Migrations
 
                     b.HasIndex("RouteId");
 
-                    b.ToTable("BTSSet");
+                    b.ToTable("BTSSet", (string)null);
                 });
 
             modelBuilder.Entity("TowerLocatorApp.Models.DetailedMapPointModel", b =>
@@ -199,7 +199,7 @@ namespace TowerLocatorApp.Migrations
 
                     b.HasIndex("RouteId");
 
-                    b.ToTable("MapPoints");
+                    b.ToTable("MapPoints", (string)null);
                 });
 
             modelBuilder.Entity("TowerLocatorApp.Models.RouteModel", b =>
@@ -219,7 +219,7 @@ namespace TowerLocatorApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Routes");
+                    b.ToTable("Routes", (string)null);
                 });
 
             modelBuilder.Entity("TowerLocatorApp.Models.BTSModel", b =>

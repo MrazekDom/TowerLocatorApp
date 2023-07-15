@@ -45,8 +45,13 @@ binding -->
   >
     Ulozit
   </button>
-  <p *ngIf="routeName === '' || isInvalidFileFormat" class="text-danger">
+  <p *ngIf="routeName === '' || isInvalidFileFormat; else dataOk" class="text-danger">
     Soubory musí mít správný formát.<br />
     Jméno musí být vyplněné
   </p>
+  <ng-template #dataOk>
+    <p class="text-success">
+      Data mohou být uložena
+    </p>
+  </ng-template>
 </form>
