@@ -11,6 +11,6 @@ export class RouteService {
   constructor(private http: HttpClient) {}
 
   public getTestValue(): Observable<string> {
-    return this.http.get<string>(`${environment.apiUrl}/${this.url}}`);
+    return this.http.get<string>(`${environment.apiUrl}/${this.url}`);
   }
 }

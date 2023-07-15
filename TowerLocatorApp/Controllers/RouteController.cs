@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,8 +9,9 @@ namespace TowerLocatorApp.Controllers {
     public class RouteController : ControllerBase {
         // GET: api/<RouteController>
         [HttpGet]
-        public async Task<string> Get() {
-            return  "Testovaci hodnota";
+        public async Task<ActionResult<string>> Get() {
+            string test = "testovaci hodnota";
+            return JsonConvert.SerializeObject(test);
         }
 
         // GET api/<RouteController>/5
