@@ -10,6 +10,8 @@ binding -->
       id="gpxFile"
       accept=".gpx"
       name="gpxInput"
+      #gpxInput
+      (change)="gpxInput.files && checkFileFormat(gpxInput.files[0], 'gpx')"
     />
   </div>
   <div class="form-group mb-3">
@@ -20,6 +22,8 @@ binding -->
       id="csvFile"
       accept=".csv"
       name="csvInput"
+      #csvInput
+      (change)="csvInput.files && checkFileFormat(csvInput.files[0], 'csv')"
     />
   </div>
   <div class="form-group mb-3">
@@ -31,9 +35,10 @@ binding -->
       [(ngModel)]="routeName"
       name="routeName"
     />
+    <!--#csvInput template reference varible -->
   </div>
   <button
-    [disabled]="routeName === ''"
+    [disabled]="routeName === '' || isInvalidFileFormat"
     class="btn btn-primary"
     type="submit"
     name="buttonSubmit"
