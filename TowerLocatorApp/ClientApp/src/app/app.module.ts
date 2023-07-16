@@ -8,8 +8,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
-
-
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -17,8 +16,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     NavMenuComponent,
     HomeComponent,
     FileUploadComponent,
-
-    
+    MapComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -26,10 +24,9 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
- 
-    ])
+    ]),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
