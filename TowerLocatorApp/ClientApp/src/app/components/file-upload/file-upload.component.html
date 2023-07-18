@@ -1,9 +1,13 @@
 <!-- ve Form tagu musi mit kazdy input unikatni "name" aby fungoval 2 way data
 binding -->
 
-<form>
+<form id="file_input_form" class="p-2">
+  <h2 class="text text-center">Vložení nové trasy do databáze</h2>
   <div class="form-group mb-3">
-    <label for="gpxFile">Vložte GPX soubor s trasou aktivity"</label>
+    <label for="gpxFile"
+      >Vložte <span style="font-weight: bold">GPX</span> soubor s trasou
+      aktivity.</label
+    >
     <input
       type="file"
       class="form-control"
@@ -15,7 +19,10 @@ binding -->
     />
   </div>
   <div class="form-group mb-3">
-    <label for="csvFile">Vložte CSV soubor z aplikace Tower Locator</label>
+    <label for="csvFile"
+      >Vložte <span style="font-weight: bold">CSV</span> soubor z aplikace Tower
+      Locator.</label
+    >
     <input
       type="file"
       class="form-control"
@@ -27,7 +34,7 @@ binding -->
     />
   </div>
   <div class="form-group mb-3">
-    <label for="routeName">Zadejte jmeno vaší trasy</label>
+    <label for="routeName">Zadejte jmeno vaší trasy.</label>
     <input
       type="text"
       class="form-control"
@@ -43,15 +50,16 @@ binding -->
     type="submit"
     name="buttonSubmit"
   >
-    Ulozit
+    Uložit
   </button>
-  <p *ngIf="routeName === '' || isInvalidFileFormat; else dataOk" class="text-danger">
+  <p
+    *ngIf="routeName === '' || isInvalidFileFormat; else dataOk"
+    class="text-danger"
+  >
     Soubory musí mít správný formát.<br />
     Jméno musí být vyplněné
   </p>
   <ng-template #dataOk>
-    <p class="text-success">
-      Data mohou být uložena
-    </p>
+    <p class="text-success">Data mohou být uložena</p>
   </ng-template>
 </form>

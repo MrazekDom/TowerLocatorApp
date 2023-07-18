@@ -9,6 +9,7 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { MapComponent } from './components/map/map.component';
+import { RouteSelectComponent } from './components/route-select/route-select.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MapComponent } from './components/map/map.component';
     HomeComponent,
     FileUploadComponent,
     MapComponent,
+    RouteSelectComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

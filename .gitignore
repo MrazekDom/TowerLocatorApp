@@ -193,7 +193,7 @@ publish/
 PublishScripts/
 
 #Ignore .angular
-TowerLocatorApp/ClientApp/.angular
+TowerLocatorApp/ClientApp/.angular/
 
 # NuGet Packages
 *.nupkg
@@ -365,5 +365,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Angular
-TowerLocatorApp/ClientApp/.angular
+
