@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration.Attributes;
 using NetTopologySuite.Geometries;
-using TowerLocatorApp.Utility;
+
 
 namespace TowerLocatorApp.Models {
     /*Model na zaklade Headeru CSV souboru z "Tower Collector" appky*/
