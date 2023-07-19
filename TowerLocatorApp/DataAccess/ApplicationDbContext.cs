@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 using TowerLocatorApp.Models;
+using TowerLocatorApp.Utility;
 
 namespace TowerLocatorApp.DataAccess {
     public class ApplicationDbContext:DbContext {
@@ -7,7 +9,7 @@ namespace TowerLocatorApp.DataAccess {
 
         public DbSet<DetailedMapPoint> MapPoints { get; set; }
         public DbSet<BTS> BTSSet { get; set; }
-        public DbSet<Models.Route> Routes { get; set; }
+        public DbSet<RouteWithData> Routes { get; set; }
 
         public ApplicationDbContext(IConfiguration configuration) {
             this.configuration = configuration;
@@ -29,6 +31,11 @@ namespace TowerLocatorApp.DataAccess {
                 .HasOne(tower =>tower.Route)
                 .WithMany(route =>route.AssociatedTowers)
                 .HasForeignKey(tower => tower.RouteId);
+
+            modelBuilder.ApplyUtcDateTimeConverter(); /* extension trida ze stackoverflow, built-in metody na konverzi data na UTC nefunguji */
         }
+
+    
     }
+    
 }

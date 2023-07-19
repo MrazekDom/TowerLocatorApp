@@ -192,6 +192,9 @@ publish/
 # in these scripts will be unencrypted
 PublishScripts/
 
+#Ignore .angular
+TowerLocatorApp/ClientApp/.angular/
+
 # NuGet Packages
 *.nupkg
 # NuGet Symbol Packages
@@ -361,3 +364,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+

@@ -16,7 +16,8 @@ namespace TowerLocatorApp.Utility {
             using (var reader = new StringReader(CSVFile)) 
             using (var csv = new CsvReader(reader,CultureInfo.InvariantCulture)) {
                 var records = csv.GetRecords<BTS>();
-                foreach(var record in records) {
+                foreach (var record in records) {
+                    
                     record.MyLocationAtMeasurement = new Point(record.lon, record.lat);
                     string StringTowerCoordinates = await GetCellTowerLocationAsync(record.cell_id, record.mcc, record.mnc, record.lac);
                     record.ActualTowerLocation = StringCoordinatesToPoint(StringTowerCoordinates);
@@ -44,10 +45,10 @@ namespace TowerLocatorApp.Utility {
 
             int lastCommaIndex = StringCoordinates.LastIndexOf(',');                /* dostanu index posledni carky */
             StringCoordinates = StringCoordinates.Substring(0, lastCommaIndex);     /* +Location:42.46,-73.245 */
-            StringCoordinates = Regex.Replace(StringCoordinates, "[A-Za-z: ]", ""); /* 42.46,-73.245 */
+            StringCoordinates = Regex.Replace(StringCoordinates, "[A-Za-z:+]", ""); /* 42.46,-73.245 */
             string[] coordinateValues = StringCoordinates.Split(',');
-            double.TryParse(coordinateValues[0], out X);
-            double.TryParse(coordinateValues[1], out Y);
+            double.TryParse(coordinateValues[0], NumberStyles.Float, CultureInfo.InvariantCulture, out X);
+            double.TryParse(coordinateValues[1], NumberStyles.Float, CultureInfo.InvariantCulture, out Y);
 
             return new Point(X, Y);
         }

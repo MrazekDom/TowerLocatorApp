@@ -13,4 +13,8 @@ export class RouteService {
   public getTestValue(): Observable<string> {
     return this.http.get<string>(`${environment.apiUrl}/${this.url}`);
   }
+
+  public uploadFiles(formData: FormData) {
+    return this.http.post(`${environment.apiUrl}/${this.url}`, formData); // POST metoda pro ulozeni dat
+  }
 }

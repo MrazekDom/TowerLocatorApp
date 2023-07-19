@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TowerLocatorApp.DataAccess;
+using TowerLocatorApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,10 @@ builder.Services.AddSwaggerGen(config => {           /////
         Url = "https://localhost:7072"
     });
 });
+builder.Services.AddScoped<RouteService>();
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
