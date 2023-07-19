@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using TowerLocatorApp.Services;
+using TowerLocatorApp.DataAccess.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace TowerLocatorApp.Controllers {
+namespace TowerLocatorApp.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
     public class RouteController : ControllerBase {

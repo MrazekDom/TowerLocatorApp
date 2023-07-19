@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TowerLocatorApp.DataAccess;
-using TowerLocatorApp.Services;
+using TowerLocatorApp.DataAccess.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

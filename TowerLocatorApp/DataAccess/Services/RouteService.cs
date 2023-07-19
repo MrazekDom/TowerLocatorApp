@@ -1,25 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+﻿
 using NetTopologySuite.Geometries;
-using System.Drawing;
-using TowerLocatorApp.DataAccess;
 using TowerLocatorApp.Models;
 using TowerLocatorApp.Utility;
-using RouteWithData = TowerLocatorApp.Models.RouteWithData;
 
-namespace TowerLocatorApp.Services {
-    public class RouteService {
+
+namespace TowerLocatorApp.DataAccess.Services
+{
+    public class RouteService
+    {
         ApplicationDbContext dbContext { get; set; }
         public RouteService(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
-        public async Task SaveRouteAsync(IFormFile gpxFile, IFormFile csvFile, string routeName) {
+        public async Task SaveRouteAsync(IFormFile gpxFile, IFormFile csvFile, string routeName)
+        {
             StreamReader? csvReader = null;
             StreamReader? gpxReader = null;
             string csvFileContents;
             string gpxFileContents;
-            try {
+            try
+            {
                 csvReader = new StreamReader(csvFile.OpenReadStream());
                 gpxReader = new StreamReader(gpxFile.OpenReadStream());
 
@@ -34,29 +35,32 @@ namespace TowerLocatorApp.Services {
                 newRoute.Name = routeName;
                 newRoute.AssociatedTowers = towers;
                 newRoute.RoutePoints = points;
-                
+
                 Coordinate[] coordinates = new Coordinate[points.Count]; /*pole souradnic, protoze LineString bere jako parametr pole*/
-                
+
                 int i = 0;
-                foreach (var point in points) {                
-                    point.Route = newRoute;                
-                    dbContext.MapPoints.Add(point);                
+                foreach (var point in points)
+                {
+                    point.Route = newRoute;
+                    dbContext.MapPoints.Add(point);
                     coordinates[i] = point.Coordinates.Coordinate;
                     i++;
                 }
-                foreach (var tower in  towers) {                
-                    tower.Route = newRoute;  
-                    dbContext.BTSSet.Add(tower);     
+                foreach (var tower in towers)
+                {
+                    tower.Route = newRoute;
+                    dbContext.BTSSet.Add(tower);
                 }
                 newRoute.Line = new LineString(coordinates);
                 dbContext.Routes.Add(newRoute);
                 await dbContext.SaveChangesAsync();
             }
-            finally {
+            finally
+            {
                 csvReader?.Dispose();
                 gpxReader?.Dispose();
             }
-            
+
         }
     }
 }

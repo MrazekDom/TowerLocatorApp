@@ -14,16 +14,17 @@ namespace TowerLocatorApp.Utility {
         public static async Task<List<BTS>> ExtractCSV(string CSVFile) {       /*dostanu z FrontEndu obsah CSV ve stringu */
             List<BTS> TowerList = new List<BTS>();
             using (var reader = new StringReader(CSVFile)) 
-            using (var csv = new CsvReader(reader,CultureInfo.InvariantCulture)) {
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture)) {  
                 var records = csv.GetRecords<BTS>();
                 foreach (var record in records) {
-                    
+                    DateTime date = record.measured_at.AddHours(-2); /*cas se ukladal o 2 hodiny posunuty dopredu, nepomohlo nastaveni v PostgreSQL */
+                    record.measured_at = date;
                     record.MyLocationAtMeasurement = new Point(record.lon, record.lat);
                     string StringTowerCoordinates = await GetCellTowerLocationAsync(record.cell_id, record.mcc, record.mnc, record.lac);
                     record.ActualTowerLocation = StringCoordinatesToPoint(StringTowerCoordinates);
-                    TowerList.Add(record);
+                TowerList.Add(record);
                 }
-                return TowerList.DistinctBy(tower=>tower.cell_id).ToList();
+                return TowerList.DistinctBy(tower=>tower.cell_id).ToList(); /*vyberu pouze unikatni BTS podle cell_id */
             }
         }
 
@@ -50,7 +51,7 @@ namespace TowerLocatorApp.Utility {
             double.TryParse(coordinateValues[0], NumberStyles.Float, CultureInfo.InvariantCulture, out Y);
             double.TryParse(coordinateValues[1], NumberStyles.Float, CultureInfo.InvariantCulture, out X);
 
-            return new Point(X, Y);
+            return new Point(X, Y);     /* lon potom lat, pri poslani na mapu je prvni lon -Y , potom lat -X (Y,X) */ 
         }
 
         /* metoda pro zpracovani GPX soubory ze Stravy, Garmin atd..., */
