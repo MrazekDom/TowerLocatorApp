@@ -23,7 +23,7 @@ namespace TowerLocatorApp.Utility {
                     record.ActualTowerLocation = StringCoordinatesToPoint(StringTowerCoordinates);
                     TowerList.Add(record);
                 }
-                return TowerList;
+                return TowerList.DistinctBy(tower=>tower.cell_id).ToList();
             }
         }
 
@@ -47,8 +47,8 @@ namespace TowerLocatorApp.Utility {
             StringCoordinates = StringCoordinates.Substring(0, lastCommaIndex);     /* +Location:42.46,-73.245 */
             StringCoordinates = Regex.Replace(StringCoordinates, "[A-Za-z:+]", ""); /* 42.46,-73.245 */
             string[] coordinateValues = StringCoordinates.Split(',');
-            double.TryParse(coordinateValues[0], NumberStyles.Float, CultureInfo.InvariantCulture, out X);
-            double.TryParse(coordinateValues[1], NumberStyles.Float, CultureInfo.InvariantCulture, out Y);
+            double.TryParse(coordinateValues[0], NumberStyles.Float, CultureInfo.InvariantCulture, out Y);
+            double.TryParse(coordinateValues[1], NumberStyles.Float, CultureInfo.InvariantCulture, out X);
 
             return new Point(X, Y);
         }
