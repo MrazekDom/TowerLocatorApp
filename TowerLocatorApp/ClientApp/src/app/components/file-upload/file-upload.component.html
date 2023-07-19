@@ -1,7 +1,7 @@
 <!-- ve Form tagu musi mit kazdy input unikatni "name" aby fungoval 2 way data
 binding -->
 
-<form id="file_input_form" class="p-2">
+<form id="file_input_form" class="p-2" (submit)="onSubmit()">
   <h2 class="text text-center">Vložení nové trasy do databáze</h2>
   <div class="form-group mb-3">
     <label for="gpxFile"
@@ -15,8 +15,8 @@ binding -->
       accept=".gpx"
       name="gpxInput"
       #gpxInput
-      (change)="gpxInput.files && checkFileFormat(gpxInput.files[0], 'gpx')"
-    />
+      (change)="gpxInput.files && [checkFileFormat(gpxInput.files[0], 'gpx'),onGpxFileChange($event)]"/>
+      <!--kdyz jsou vlozene soubory tak se provedou metody ktere jsou za "&&"-->
   </div>
   <div class="form-group mb-3">
     <label for="csvFile"
@@ -30,8 +30,7 @@ binding -->
       accept=".csv"
       name="csvInput"
       #csvInput
-      (change)="csvInput.files && checkFileFormat(csvInput.files[0], 'csv')"
-    />
+      (change)="csvInput.files && [checkFileFormat(csvInput.files[0], 'csv'),onCsvFileChange($event)] "/>
   </div>
   <div class="form-group mb-3">
     <label for="routeName">Zadejte jmeno vaší trasy.</label>

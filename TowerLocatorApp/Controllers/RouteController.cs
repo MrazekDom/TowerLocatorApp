@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using TowerLocatorApp.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -7,6 +8,11 @@ namespace TowerLocatorApp.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class RouteController : ControllerBase {
+        public RouteService routeService { get; set; }
+        public RouteController(RouteService routeService)   //Instance RouteService
+        {
+            this.routeService = routeService;
+        }
         // GET: api/<RouteController>
         [HttpGet]
         public async Task<ActionResult<string>> Get() {
@@ -22,7 +28,9 @@ namespace TowerLocatorApp.Controllers {
 
         // POST api/<RouteController>
         [HttpPost]
-        public void Post([FromBody] string value) {
+        public async Task<IActionResult> SaveRoute([FromForm] IFormFile gpxFile, [FromForm] IFormFile csvFile, [FromForm] string routeName) {
+            await routeService.SaveRouteAsync(gpxFile, csvFile, routeName);
+            return Ok(routeName);
         }
 
         // PUT api/<RouteController>/5

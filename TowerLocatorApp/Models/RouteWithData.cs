@@ -1,7 +1,9 @@
 ﻿using NetTopologySuite.Geometries;
+using System.ComponentModel.DataAnnotations;
 
 namespace TowerLocatorApp.Models {
-    public class Route {
+    public class RouteWithData {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public LineString? Line { get; set; }

@@ -55,7 +55,7 @@ namespace TowerLocatorApp.Models {
         [Ignore]
         public int? RouteId { get; set; }
         [Ignore]
-        public Route? Route { get; set; }
+        public RouteWithData? Route { get; set; }
 
        
     }

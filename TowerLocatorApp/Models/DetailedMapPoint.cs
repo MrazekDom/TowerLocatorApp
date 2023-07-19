@@ -8,7 +8,7 @@ namespace TowerLocatorApp.Models {
             public DateTime Timestamp { get; set; }
 
             public int RouteId { get; set; }
-            public Route Route { get; set; }
+            public RouteWithData Route { get; set; }
         
     }
 }
