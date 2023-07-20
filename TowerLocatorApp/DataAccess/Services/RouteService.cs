@@ -67,7 +67,7 @@ namespace TowerLocatorApp.DataAccess.Services
         }
 
         public async Task<IEnumerable<RouteViewModel>> getAllRoutesAsync() {
-             var allRoutes =  dbContext.Routes;
+             var allRoutes =  await dbContext.Routes.ToListAsync();
             List<RouteViewModel> routeNamesAndIds = new List<RouteViewModel>();
             foreach(var route in allRoutes) {
                 RouteViewModel routeViewModel = new RouteViewModel {
@@ -77,6 +77,13 @@ namespace TowerLocatorApp.DataAccess.Services
                 routeNamesAndIds.Add(routeViewModel);
             }
             return routeNamesAndIds;
+        }
+
+        public async Task deleteRouteAsync(int id) {
+            var routeToDelete = await dbContext.Routes.Include(r=>r.RoutePoints).Include(r=>r.AssociatedTowers).FirstOrDefaultAsync(r => r.Id == id);
+            dbContext.Routes.Remove(routeToDelete);
+            
+            await dbContext.SaveChangesAsync();
         }
     }
 }

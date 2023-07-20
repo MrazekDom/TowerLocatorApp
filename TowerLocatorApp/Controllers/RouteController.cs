@@ -43,7 +43,11 @@ namespace TowerLocatorApp.Controllers
 
         // DELETE api/<RouteController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id) {
+        public async Task<IActionResult> Delete(int id) {
+            await routeService.deleteRouteAsync(id);    /*nejdrive vymazu cestu a potom znovu nahraju seznam*/
+            var AllRoutes = await routeService.getAllRoutesAsync();
+            return Ok(AllRoutes);
+            
         }
     }
 }

@@ -19,28 +19,29 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initializeMap();
-    this.addMarkers();
-    this.centerMap();
+    // this.addMarkers();
+    // this.centerMap();
   }
 
   private initializeMap() {
     const baseMapURl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     this.map = L.map('map');
     L.tileLayer(baseMapURl).addTo(this.map);
+    this.map.setView(new L.LatLng(49.820923, 18.262524), 10);
   }
 
-  private addMarkers() {
-    // Add your markers to the map
-    this.markers.forEach((marker) => marker.addTo(this.map));
-  }
+//   private addMarkers() {
+//     // Add your markers to the map
+//     this.markers.forEach((marker) => marker.addTo(this.map));
+//   }
 
-  private centerMap() {
-    // Create a LatLngBounds object to encompass all the marker locations
-    const bounds = L.latLngBounds(
-      this.markers.map((marker) => marker.getLatLng())
-    );
+//   private centerMap() {
+//     // Create a LatLngBounds object to encompass all the marker locations
+//     const bounds = L.latLngBounds(
+//       this.markers.map((marker) => marker.getLatLng())
+//     );
 
-    // Fit the map view to the bounds
-    this.map.fitBounds(bounds);
-  }
+//     // Fit the map view to the bounds
+//     this.map.fitBounds(bounds);
+//   }
 }

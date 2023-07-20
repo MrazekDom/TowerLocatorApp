@@ -1,8 +1,9 @@
 <h2 class="text text-center">Vyberte trasu pro zobrazení</h2>
-<select class="form-select" aria-label="routeSelect">
-  <option selected>Vyberte trasu</option>
-  <option *ngFor="let route of routeList" [value]="route.Id">
+<select class="form-select" aria-label="routeSelect" #selectedRoute>
+  <option selected disabled>Vyberte trasu</option>
+  <option *ngFor="let route of routeList" [value]="route.id">
     {{route.name}} 
   </option>
   
 </select>
+<button type="button" class="btn btn-danger mt-2" (click)="onDelete(selectedRoute.value)">Smazat</button>

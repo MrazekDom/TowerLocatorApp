@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouteService } from 'src/app/services/route.service';
+import { RouteSelectComponent } from '../route-select/route-select.component';
 
 @Component({
   selector: 'app-file-upload',
@@ -12,9 +13,11 @@ export class FileUploadComponent {
   gpxFile!: File;
   csvFile!: File;
   routeService: RouteService;
+  
 
   constructor(routeService: RouteService) {
     this.routeService = routeService;
+    
   }
 
   checkFileFormat(file: File, format: string): void {
@@ -46,5 +49,6 @@ export class FileUploadComponent {
     formData.append('routeName', this.routeName);
 
     this.routeService.uploadFiles(formData).subscribe(); /*zavolani RouteService kde se pak uplodanuji data na backend*/
+    
   }
 }
