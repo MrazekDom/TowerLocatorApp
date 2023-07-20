@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouteService } from 'src/app/services/route.service';
 
 @Component({
   selector: 'app-route-select',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./route-select.component.css']
 })
 export class RouteSelectComponent {
+  routeList: any[] = []; /*pole do ktereho vlozim seznam cest*/
+  constructor(private routeService:RouteService) {
+  }
 
+  ngOnInit(): void{
+    this.routeService.getRouteNames().subscribe((response: any[]) => {
+      this.routeList = response;
+    });
+    
+  }
 }

@@ -9,10 +9,8 @@ export class AppComponent {
   title = 'app';
   result: string = '';
 
-  constructor(private routeService: RouteService) {}
+  constructor() {}
   ngOnInit(): void {
-    this.routeService
-      .getTestValue()
-      .subscribe((response: string) => (this.result = response));
+    
   }
 }

@@ -17,8 +17,6 @@ namespace TowerLocatorApp.Utility {
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture)) {  
                 var records = csv.GetRecords<BTS>();
                 foreach (var record in records) {
-                    DateTime date = record.measured_at.AddHours(-2); /*cas se ukladal o 2 hodiny posunuty dopredu, nepomohlo nastaveni v PostgreSQL */
-                    record.measured_at = date;
                     record.MyLocationAtMeasurement = new Point(record.lon, record.lat);
                     string StringTowerCoordinates = await GetCellTowerLocationAsync(record.cell_id, record.mcc, record.mnc, record.lac);
                     record.ActualTowerLocation = StringCoordinatesToPoint(StringTowerCoordinates);
@@ -51,7 +49,7 @@ namespace TowerLocatorApp.Utility {
             double.TryParse(coordinateValues[0], NumberStyles.Float, CultureInfo.InvariantCulture, out Y);
             double.TryParse(coordinateValues[1], NumberStyles.Float, CultureInfo.InvariantCulture, out X);
 
-            return new Point(X, Y);     /* lon potom lat, pri poslani na mapu je prvni lon -Y , potom lat -X (Y,X) */ 
+            return new Point(X, Y);     /* lon potom lat, pri poslani na mapu je prvni lat -Y , potom lon -X (Y,X) */ 
         }
 
         /* metoda pro zpracovani GPX soubory ze Stravy, Garmin atd..., */
@@ -67,6 +65,12 @@ namespace TowerLocatorApp.Utility {
                                                      Timestamp = (DateTime)x.Element(xNamespace + "time"),
 
                                                  }).ToList();
+            foreach ( var point in DetailedPoints ) {
+                DateTime newTimeStamp = point.Timestamp.AddHours(2);        /*cas se ukladal spatne o 2 hodiny dozadu,
+                                                                             i kdyz byl spravne nastaven na UTC
+                                                                             nastaveni databaze nefunguovalo*/
+                point.Timestamp = newTimeStamp;
+            }
             return DetailedPoints;
         }
     }

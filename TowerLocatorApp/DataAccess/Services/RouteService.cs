@@ -1,8 +1,10 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
 using TowerLocatorApp.Models;
 using TowerLocatorApp.Utility;
-
+using TowerLocatorApp.ViewModels;
 
 namespace TowerLocatorApp.DataAccess.Services
 {
@@ -31,10 +33,11 @@ namespace TowerLocatorApp.DataAccess.Services
                 List<BTS> towers = await towersTask;
                 List<DetailedMapPoint> points = UtilityMethods.ParseGPXFile(gpxFileContents);
 
-                RouteWithData newRoute = new RouteWithData();
-                newRoute.Name = routeName;
-                newRoute.AssociatedTowers = towers;
-                newRoute.RoutePoints = points;
+                RouteWithData newRoute = new RouteWithData{
+                    Name = routeName,
+                    AssociatedTowers = towers,
+                    RoutePoints = points
+                };
 
                 Coordinate[] coordinates = new Coordinate[points.Count]; /*pole souradnic, protoze LineString bere jako parametr pole*/
 
@@ -61,6 +64,19 @@ namespace TowerLocatorApp.DataAccess.Services
                 gpxReader?.Dispose();
             }
 
+        }
+
+        public async Task<IEnumerable<RouteViewModel>> getAllRoutesAsync() {
+             var allRoutes =  dbContext.Routes;
+            List<RouteViewModel> routeNamesAndIds = new List<RouteViewModel>();
+            foreach(var route in allRoutes) {
+                RouteViewModel routeViewModel = new RouteViewModel {
+                    Name = route.Name,
+                    Id = route.Id,
+                };
+                routeNamesAndIds.Add(routeViewModel);
+            }
+            return routeNamesAndIds;
         }
     }
 }

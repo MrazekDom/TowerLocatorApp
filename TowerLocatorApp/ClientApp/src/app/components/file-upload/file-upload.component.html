@@ -16,7 +16,7 @@ binding -->
       name="gpxInput"
       #gpxInput
       (change)="gpxInput.files && [checkFileFormat(gpxInput.files[0], 'gpx'),onGpxFileChange($event)]"/>
-      <!--kdyz jsou vlozene soubory tak se provedou metody ktere jsou za "&&"-->
+      <!--kdyz jsou vlozene soubory (vyjde - TRUE ) tak se provedou metody ktere jsou za "&&"-->
   </div>
   <div class="form-group mb-3">
     <label for="csvFile"

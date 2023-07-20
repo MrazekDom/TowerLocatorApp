@@ -10,11 +10,11 @@ export class RouteService {
   private url = 'Route';
   constructor(private http: HttpClient) {}
 
-  public getTestValue(): Observable<string> {
-    return this.http.get<string>(`${environment.apiUrl}/${this.url}`);
-  }
-
   public uploadFiles(formData: FormData) {
     return this.http.post(`${environment.apiUrl}/${this.url}`, formData); // POST metoda pro ulozeni dat
+  }
+
+  public getRouteNames(): Observable<any>{
+    return this.http.get<any>(`${environment.apiUrl}/${this.url}`);
   }
 }
