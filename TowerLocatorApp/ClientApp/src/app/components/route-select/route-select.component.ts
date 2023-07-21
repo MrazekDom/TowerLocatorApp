@@ -8,8 +8,13 @@ import { RouteService } from 'src/app/services/route.service';
 })
 export class RouteSelectComponent { 
   routeList: any[] = []; /*pole do ktereho vlozim seznam cest*/
+  returnRouteName: string = '';
+  routeDeleted: boolean = false;
+  deleteInProcess: boolean = false;
   
-  constructor(private routeService:RouteService) {
+  
+  constructor(public routeService: RouteService) {
+    
   }
 
   ngOnInit(): void{
@@ -19,10 +24,23 @@ export class RouteSelectComponent {
   }
 
 
-  onDelete(selectedRouteId:string) {
-    this.routeService.deleteRoute(Number(selectedRouteId)).subscribe((response: any[]) => {
-      this.routeList = response; /*kdyz smazu cestu, tak hned nactu seznam znovu */
+  onDelete(selectedRouteId: string) {
+    this.deleteInProcess = true;
+    this.routeService.deleteRoute(Number(selectedRouteId)).subscribe((response: any) => {
+      this.routeDeleted = true;
+      this.deleteInProcess = false;
+      this.returnRouteName = response.deletedRoute;
+      this.ngOnInit() /*kdyz smazu cestu, tak hned nactu seznam znovu */
     })
+  }
+
+
+  onRefresh(): void{
+    this.ngOnInit();
+  }
+
+  onView(): void{
+    
   }
   
 }

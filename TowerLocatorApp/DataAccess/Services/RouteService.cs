@@ -79,11 +79,13 @@ namespace TowerLocatorApp.DataAccess.Services
             return routeNamesAndIds;
         }
 
-        public async Task deleteRouteAsync(int id) {
+        public async Task<string> deleteRouteAsync(int id) {
             var routeToDelete = await dbContext.Routes.Include(r=>r.RoutePoints).Include(r=>r.AssociatedTowers).FirstOrDefaultAsync(r => r.Id == id);
+            var deletedRoute = routeToDelete.Name;
             dbContext.Routes.Remove(routeToDelete);
             
             await dbContext.SaveChangesAsync();
+            return deletedRoute;
         }
     }
 }

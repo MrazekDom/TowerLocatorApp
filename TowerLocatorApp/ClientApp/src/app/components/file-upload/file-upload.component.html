@@ -1,7 +1,7 @@
 <!-- ve Form tagu musi mit kazdy input unikatni "name" aby fungoval 2 way data
 binding -->
 
-<form id="file_input_form" class="p-2" (submit)="onSubmit()">
+<form id="file_input_form" class="p-2" #fileInputForm (submit)="onSubmit()">
   <h2 class="text text-center">Vložení nové trasy do databáze</h2>
   <div class="form-group mb-3">
     <label for="gpxFile"
@@ -62,3 +62,5 @@ binding -->
     <p class="text-success">Data mohou být uložena</p>
   </ng-template>
 </form>
+<p *ngIf="uploadInProcess" class="text-success text text-center mt-5 display-5">Nahrávání...</p>
+<p *ngIf="fileUploaded" class="text-success text text-center mt-5 display-5">Vaše cesta s názvem "<span class="font font-weight-bold text-danger">{{routeNameReturn}}</span>" byla nahrána</p>

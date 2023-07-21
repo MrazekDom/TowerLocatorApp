@@ -4,6 +4,14 @@
   <option *ngFor="let route of routeList" [value]="route.id">
     {{route.name}} 
   </option>
-  
 </select>
-<button type="button" class="btn btn-danger mt-2" (click)="onDelete(selectedRoute.value)">Smazat</button>
+<div class="text-center">
+<div class="btn-group" role="group" aria-label="controlButtons">
+  <button type="button" class="btn btn-danger mt-2 p-4" (click)="onDelete(selectedRoute.value)">Smazat</button>
+  <button type="button" class="btn btn-success mt-2 p-4"(click)="onView()">Zobrazit</button>
+
+  <button type="button" class="btn btn-warning mt-2 p-4"(click)="onRefresh()">Aktualizovat</button>
+</div>
+</div>
+<p *ngIf="deleteInProcess" class="text text-danger text text-center mt-5 display-5">Mazání...</p>
+<p *ngIf="routeDeleted" class="text-success  text text-center mt-5 display-5">Vase cesta s názvem "<span class="font font-weight-bold text text-danger">{{returnRouteName}}</span>" byla smazána</p>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouteService } from 'src/app/services/route.service';
-import { RouteSelectComponent } from '../route-select/route-select.component';
 
 @Component({
   selector: 'app-file-upload',
@@ -13,6 +12,9 @@ export class FileUploadComponent {
   gpxFile!: File;
   csvFile!: File;
   routeService: RouteService;
+  fileUploaded: boolean = false;
+  uploadInProcess: boolean = false;
+  routeNameReturn: string = '';
   
 
   constructor(routeService: RouteService) {
@@ -47,8 +49,13 @@ export class FileUploadComponent {
     formData.append('gpxFile', this.gpxFile);
     formData.append('csvFile', this.csvFile);
     formData.append('routeName', this.routeName);
-
-    this.routeService.uploadFiles(formData).subscribe(); /*zavolani RouteService kde se pak uplodanuji data na backend*/
+    this.uploadInProcess = true;
+    this.routeService.uploadFiles(formData).subscribe((response: any) => {
+      this.routeNameReturn = response.routeName;      /*zobrazim jmeno ulozene cesty*/
+      this.uploadInProcess = false;
+      this.fileUploaded = true;
+      
+    }); /*zavolani RouteService kde se pak uplodanuji data na backend*/
     
   }
 }

@@ -66,10 +66,8 @@ namespace TowerLocatorApp.Utility {
 
                                                  }).ToList();
             foreach ( var point in DetailedPoints ) {
-                DateTime newTimeStamp = point.Timestamp.AddHours(2);        /*cas se ukladal spatne o 2 hodiny dozadu,
-                                                                             i kdyz byl spravne nastaven na UTC
-                                                                             nastaveni databaze nefunguovalo*/
-                point.Timestamp = newTimeStamp;
+                DateTime newTimeStamp = point.Timestamp.AddHours(2);        /*cas se ukladal spatne o 2 hodiny dozadu,*/
+                point.Timestamp = newTimeStamp;                             /*  i kdyz byl spravne nastaven na UTC nastaveni databaze nefunguovalo*/
             }
             return DetailedPoints;
         }

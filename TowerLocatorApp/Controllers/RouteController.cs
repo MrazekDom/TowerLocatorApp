@@ -33,7 +33,7 @@ namespace TowerLocatorApp.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveRoute([FromForm] IFormFile gpxFile, [FromForm] IFormFile csvFile, [FromForm] string routeName) {
             await routeService.SaveRouteAsync(gpxFile, csvFile, routeName);
-            return Ok(routeName);
+            return Ok(new { RouteName = routeName });
         }
 
         // PUT api/<RouteController>/5
@@ -44,9 +44,10 @@ namespace TowerLocatorApp.Controllers
         // DELETE api/<RouteController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id) {
-            await routeService.deleteRouteAsync(id);    /*nejdrive vymazu cestu a potom znovu nahraju seznam*/
-            var AllRoutes = await routeService.getAllRoutesAsync();
-            return Ok(AllRoutes);
+            string deletedRoute = await routeService.deleteRouteAsync(id);    /*nejdrive vymazu "Route" a potom znovu nahraju seznam*/
+            return Ok(new { DeletedRoute = deletedRoute });
+            //var AllRoutes = await routeService.getAllRoutesAsync();
+            
             
         }
     }
