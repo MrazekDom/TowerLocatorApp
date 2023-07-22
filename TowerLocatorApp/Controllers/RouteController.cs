@@ -25,8 +25,9 @@ namespace TowerLocatorApp.Controllers
 
         // GET api/<RouteController>/5
         [HttpGet("{id}")]
-        public string Get(int id) {
-            return "value";
+        public async Task<IActionResult> GetSingleRoute(int id) {
+            var geoJson = await routeService.getRouteAsync(id);
+            return Ok(geoJson);
         }
 
         // POST api/<RouteController>

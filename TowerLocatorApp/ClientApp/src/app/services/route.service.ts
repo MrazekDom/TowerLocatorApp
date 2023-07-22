@@ -21,4 +21,8 @@ export class RouteService {
   public deleteRoute(id: number):Observable<any> {
     return this.http.delete(`${environment.apiUrl}/${this.url}/${id}`);
   }
+
+  public getSingleRoute(id: number): Observable<any>{
+    return this.http.get<any>(`${environment.apiUrl}/${this.url}/${id}`);
+  }
 }

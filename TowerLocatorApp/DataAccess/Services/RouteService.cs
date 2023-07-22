@@ -87,5 +87,11 @@ namespace TowerLocatorApp.DataAccess.Services
             await dbContext.SaveChangesAsync();
             return deletedRoute;
         }
+
+        public async Task<string> getRouteAsync(int id) {
+            var routeToSend = await dbContext.Routes.Include(r => r.RoutePoints).Include(r => r.AssociatedTowers).FirstOrDefaultAsync(r => r.Id == id);
+            string geoJson = GeoJSONConverter.ToGeoJson(routeToSend);
+            return geoJson;
+        }
     }
 }

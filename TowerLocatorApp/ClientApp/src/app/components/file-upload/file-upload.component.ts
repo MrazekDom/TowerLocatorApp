@@ -54,6 +54,9 @@ export class FileUploadComponent {
       this.routeNameReturn = response.routeName;      /*zobrazim jmeno ulozene cesty*/
       this.uploadInProcess = false;
       this.fileUploaded = true;
+      setTimeout(() => {
+        this.fileUploaded = false;
+      },10000)
       
     }); /*zavolani RouteService kde se pak uplodanuji data na backend*/
     

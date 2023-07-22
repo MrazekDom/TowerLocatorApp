@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using NetTopologySuite.IO.Converters;
+using NetTopologySuite;
 using TowerLocatorApp.DataAccess;
 using TowerLocatorApp.DataAccess.Services;
 
@@ -19,6 +21,13 @@ builder.Services.AddSwaggerGen(config => {           /////
         Url = "https://localhost:7072"
     });
 });
+
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options => {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
+        options.SerializerSettings.Converters.Add(new GeometryConverter(geometryFactory));
+    });
 builder.Services.AddScoped<RouteService>();
 
 
