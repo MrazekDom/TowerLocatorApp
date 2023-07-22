@@ -10,10 +10,10 @@
 <div class="btn-group" role="group" aria-label="controlButtons">
   <button type="button" class="btn btn-danger mt-2 p-4" (click)="onDelete(selectedRoute.value)">Smazat</button>
   <button type="button" class="btn btn-success mt-2 p-4"(click)="onView(selectedRoute.value)">Zobrazit</button>
-
   <button type="button" class="btn btn-warning mt-2 p-4"(click)="onRefresh()">Aktualizovat</button>
 </div>
 </div>
+<p *ngIf="routeLoadInProcess" class="text-warning  text text-center mt-5 display-5">Načítání trasy do mapy...</p>
 <p *ngIf="listRefreshed" class="text-warning  text text-center mt-5 display-5">Seznam aktualizován.</p>
 <p *ngIf="deleteInProcess" class="text text-danger text text-center mt-5 display-5">Mazání...</p>
 <p *ngIf="routeDeleted" class="text-success  text text-center mt-5 display-5">Vase trasa s názvem "<span class="font font-weight-bold text text-danger">{{returnRouteName}}</span>" byla smazána.</p>

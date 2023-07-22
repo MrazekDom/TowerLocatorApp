@@ -9,17 +9,13 @@ export class MapService{
     private GeoJsonDataSubject = new Subject<string>();
     GeoJsonData$ = this.GeoJsonDataSubject.asObservable();
     private showMapDataFlagSubject = new Subject<boolean>();
-  showMapDataFlag$ = this.showMapDataFlagSubject.asObservable();
+    showMapDataFlag$ = this.showMapDataFlagSubject.asObservable();
 
-  
-
-    constructor() {
-        
+    constructor() { 
     }
     setShowMapDataFlag(flag: boolean) {
         this.showMapDataFlagSubject.next(flag);
       }
-
 
     sendMapData(mapData: string) {
         this.GeoJsonDataSubject.next(mapData);

@@ -43,6 +43,7 @@ binding -->
     />
     <!--#csvInput je template reference varible -->
   </div>
+  <div class="text-center">
   <button
     [disabled]="routeName === '' || isInvalidFileFormat"
     class="btn btn-primary"
@@ -51,15 +52,16 @@ binding -->
   >
     Uložit
   </button>
+</div>
   <p
     *ngIf="routeName === '' || isInvalidFileFormat; else dataOk"
-    class="text-danger"
+    class="text-danger text text-center mt-2"
   >
     Soubory musí mít správný formát.<br />
     Jméno musí být vyplněné
   </p>
   <ng-template #dataOk>
-    <p class="text-success">Data mohou být uložena</p>
+    <p class="text-success text text-center mt-2">Data mohou být uložena</p>
   </ng-template>
 </form>
 <p *ngIf="uploadInProcess" class="text-success text text-center mt-5 display-5">Nahrávání...</p>

@@ -14,6 +14,7 @@ export class RouteSelectComponent {
   deleteInProcess: boolean = false;
   listRefreshed: boolean = false;
   geoData: string = '';
+  routeLoadInProcess: boolean = false;
   
   constructor(public routeService: RouteService, public mapService: MapService) {   /*injectuju RouteService a MapService */
     
@@ -48,7 +49,11 @@ export class RouteSelectComponent {
     },5000)
   }
 
-  onView(selectedRouteId:string): void{
+  onView(selectedRouteId: string): void{
+    this.routeLoadInProcess = true;
+    setTimeout(() => {
+      this.routeLoadInProcess = false;
+    },7000)
     this.routeService.getSingleRoute(Number(selectedRouteId)).subscribe((response: any) => {
       this.geoData = response;
       this.mapService.sendMapData(this.geoData); /*posilam data z backendu do servicky */

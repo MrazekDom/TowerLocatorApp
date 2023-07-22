@@ -49,7 +49,9 @@ namespace TowerLocatorApp.Utility {
             foreach (var myLocation in route.AssociatedTowers) {
                 var myLocationFeature = CreateFeature("Point", myLocation.MyLocationAtMeasurement, new JObject {
                     {"Cell_Id", myLocation.cell_id },
-                    {"Síla_signálu", myLocation.dbm }
+                    {"Síla_signálu", myLocation.dbm },
+                    {"Device",myLocation.device },
+                    {"Measured_At",myLocation.measured_at }
                 });
                 features.Add(myLocationFeature);
             }

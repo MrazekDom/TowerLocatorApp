@@ -10,7 +10,12 @@ import { MapService } from 'src/app/services/map.service';
 export class MapComponent implements OnInit, AfterViewInit {
   private map!: L.Map;
   private geoData: any;
-  private showMapDataFlag: boolean = false;
+  showMapDataFlag: boolean = false;
+  routeLoadInProcess: boolean = false;
+  routeLoaded: boolean = false;
+  GeoJsonLayers = L.layerGroup();
+  
+  
   
   constructor(public mapService: MapService) { } /*injectuji Map service*/
 
@@ -24,12 +29,13 @@ export class MapComponent implements OnInit, AfterViewInit {
       if (this.showMapDataFlag) {
         this.showMapData();
       }
-    }); 
-    
-    
+    });  
   }
 
-  
+  clearMap() {            /*reset mapy pri kazdem nacteni nove trasy*/
+    this.GeoJsonLayers.clearLayers();
+    
+  }
 
   private initializeMap() {
     const baseMapURl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -39,6 +45,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   showMapData() {
+    this.clearMap();
+    const markers:any = [];
     const geoJsonLayer = L.geoJSON(this.geoData, {
       pointToLayer: (feature, latlng) => {  /*leaflet option na zmeneni marker ikony*/
         let color = 'blue';           /*zakladni barva*/
@@ -53,30 +61,53 @@ export class MapComponent implements OnInit, AfterViewInit {
           opacity: 1,
           fillOpacity: 0.8
         };
-        return L.circleMarker(latlng, markerOptions); /*circle marker je Leaflet metoda pro vytvoreni kruhove ikony*/
+
+        /*sebrana metoda z netu na highlight markeru pri kliknuti*/
+        const marker = L.circleMarker(latlng, markerOptions); /*circle marker je Leaflet metoda pro vytvoreni kruhove ikony*/
+
+        marker.on('click', () => {        
+          const clickedCellId = feature.properties.Cell_Id;
+          const relatedMarkers = markers.filter((m:any) => m.feature.properties.Cell_Id === clickedCellId);   /*pri kliknuti se projede pole markers, ktere ma v sobe vsechny cellId,*/ 
+          relatedMarkers.forEach((m:any) => {                                                                 // vyfiltruje se na relatedMarkers, kterym se pak da zluta barva,
+            m.marker.setStyle({ fillColor: 'yellow' });
+          });
+
+          markers.forEach((m:any) => {                                    /* naopak, vsem cellId ktere nejsou stejne, se da defaultni brava*/
+            if (m.feature.properties.Cell_Id !== clickedCellId) {
+              m.marker.setStyle({ fillColor: m.defaultColor });
+            }
+          });
+        });
+        markers.push({ feature, marker, defaultColor: color });
+        return marker;
+        // return L.circleMarker(latlng, markerOptions); /*circle marker je Leaflet metoda pro vytvoreni kruhove ikony*/
       },
       onEachFeature: (feature, layer) => {
         if (feature.properties.Id && feature.geometry.type === 'Point') { /*zjisteni, jestli je feature BTS*/
           const popupContent = `
-            <b>BTS Data</b><br>     
-            Cell Id: ${feature.properties.Cell_Id}<br>    
-            MCC: ${feature.properties.MCC}<br>
-            MNC: ${feature.properties.MNC}<br>
-            LAC: ${feature.properties.LAC}<br>
-            Připojil se v: ${feature.properties.Measured_At}<br>
+            <b>|BTS Data|</b><br>     
+            <b>Cell Id:</b> ${feature.properties.Cell_Id}<br>    
+            <b>MCC:</b> ${feature.properties.MCC}<br>
+            <b>MNC:</b> ${feature.properties.MNC}<br>
+            <b>LAC:</b> ${feature.properties.LAC}<br>
+            <b>Připojil se v:</b> ${feature.properties.Measured_At}<br>
+            <b>Technologie:</b> ${feature.properties.Net_Type}<br>
           `;    /*k vezi pridavam popup kde jsou data*/
           layer.bindPopup(popupContent);
         }
         else if (feature.geometry.type === 'Point') {
           const popupContent = `
-          <b>Moje lokace pri měření</b><br>
-          ID BTS ke které jsem byl v tento moment připojen: ${feature.properties.Cell_Id}<br>
-          Síla signálu: ${feature.properties.Síla_signálu}<br>
+          <b>|Moje lokace při připojení k nové BTS|</b><br>
+          <b>ID připojené BTS:</b> ${feature.properties.Cell_Id}<br>
+          <b>Připojil se v:</b> ${feature.properties.Measured_At}<br>
+          <b>Síla signálu:</b> ${feature.properties.Síla_signálu} dbm<br>
+          <b>Zařízení:</b> ${feature.properties.Device}<br>
         `;
         layer.bindPopup(popupContent);
         }
       },
     });
+    this.GeoJsonLayers.addLayer(geoJsonLayer);
       geoJsonLayer.addTo(this.map);
       this.map.fitBounds(geoJsonLayer.getBounds());
   }
